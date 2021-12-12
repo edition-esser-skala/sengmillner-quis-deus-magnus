@@ -1,285 +1,24 @@
-\documentclass[parskip=full]{scrreprt}
-
-\RedeclareSectionCommand[pagestyle=plain,afterskip=10pt plus 1pt]{chapter}
-\setkomafont{chapter}{\mdseries\headingfont\fontsize{40}{40}\selectfont\color{black!80}}
-\setkomafont{pageheadfoot}{\normalsize}
-
-\def\pnumbox#1{#1\hspace*{8cm}}
-\def\gobble#1{}
-\DeclareTOCStyleEntry[
-  indent=0pt,
-  beforeskip=0pt,
-  entryformat=\itshape,
-  entrynumberformat=\textcolor{oldred},
-  numwidth=2em,
-  linefill=\hfill,
-  pagenumberbox=\pnumbox,
-  pagenumberformat=\itshape
-]{tocline}{part}
-
-\DeclareTOCStyleEntry[
-  indent=0pt,
-  beforeskip=0pt,
-  entrynumberformat=\textcolor{oldred},
-  numwidth=2em,
-  linefill=\hfill,
-  pagenumberbox=\pnumbox
-]{tocline}{section}
-
-\DeclareTOCStyleEntry[
-  indent=0pt,
-  beforeskip=-\parskip,
-  entrynumberformat=\gobble,
-  entryformat=\ltseries,
-  numwidth=2em,
-  linefill=\hfill,
-  pagenumberbox=\pnumbox,
-  pagenumberformat=\ltseries
-]{tocline}{subsection}
-
-\usepackage{polyglossia}
-\setdefaultlanguage{english}
-
-\usepackage{fontspec}
-
-\setmainfont{Source Sans Pro}[
-  ItalicFont = Source Sans Pro Italic,
-  BoldFont = Source Sans Pro Bold,
-  BoldItalicFont = Source Sans Pro Bold Italic,
-  FontFace = {lt}{n}{Source Sans Pro Light},
-  FontFace = {lt}{it}{Source Sans Pro Light Italic},
-  FontFace = {sb}{n}{Source Sans Pro Semibold},
-  FontFace = {sb}{it}{Source Sans Pro Semibold Italic},
-  Numbers = Proportional,
-  Ligatures = Common
-]
-\DeclareRobustCommand{\ltseries}{\fontseries{lt}\selectfont}
-\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
-\DeclareTextFontCommand{\textlt}{\ltseries}
-\DeclareTextFontCommand{\textsb}{\sbseries}
-
-\newfontfamily\headingfont{Fredericka the Great}
-
-\usepackage[pass]{geometry}
-\newgeometry{twoside,inner=20mm,outer=40mm,top=20mm,bottom=40mm}
-
-\usepackage{url}
-\urlstyle{same}
-
-\usepackage{microtype}
-\microtypesetup{verbose=silent}
-
-\usepackage{booktabs,array,longtable}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
-
-\usepackage{graphicx}
-
-\usepackage{xcolor}
-\definecolor{oldred}{rgb}{.8313,0,0}
-
-\usepackage{pdfpages}
-
-\usepackage{scrlayer-scrpage}
-\pagestyle{scrheadings}
-\clearscrheadfoot
-\cfoot[\thepage]{\thepage}
-\pagenumbering{roman}
-
-\usepackage{enumitem}
-\setlist[description]{%
-  style=nextline,%
-  leftmargin=2em,%
-  first=\ltseries,%
-  font=\normalfont%
-}
-\def\lyrefitem#1{\item[\lyref{#1}]}
-
-
-\makeatletter
-
-\def\@firstofthree#1#2#3{#1}
-\def\@secondofthree#1#2#3{#2}
-\def\@thirdofthree#1#2#3{#3}
-\def\@firstoffour#1#2#3#4{#1}
-\def\@secondoffour#1#2#3#4{#2}
-\def\@thirdoffour#1#2#3#4{#3}
-\def\@fourthoffour#1#2#3#4{#4}
-\def\Dotfill{\leavevmode\cleaders\hb@xt@ .75em{\hss .\hss }\hfill \kern \z@}
-
-\def\lyrefnumber#1{\expandafter\@setref\csname r@#1\endcsname\@firstofthree{#1}}
-\def\lyreftitle#1{\expandafter\@setref\csname r@#1\endcsname\@secondofthree{#1}}
-\def\lyrefpage#1{\expandafter\@setref\csname r@#1\endcsname\@thirdofthree{#1}}
-
-\def\lyrefgenrenumber#1{\expandafter\@setref\csname r@#1\endcsname\@firstoffour{#1}}
-\def\lyrefgenregenre#1{\expandafter\@setref\csname r@#1\endcsname\@secondoffour{#1}}
-\def\lyrefgenretitle#1{\expandafter\@setref\csname r@#1\endcsname\@thirdoffour{#1}}
-\def\lyrefgenrepage#1{\expandafter\@setref\csname r@#1\endcsname\@fourthoffour{#1}}
-
-\def\lyref#1{%
-  \begingroup%
-  \makebox[0pt][l]{\color{oldred}\lyrefnumber{#1}}\hspace*{2em}%
-  \lyreftitle{#1}\Dotfill\lyrefpage{#1}%
-  \endgroup%
-}
-\def\lyrefpart#1{%
-  \begingroup%
-  \makebox[0pt][l]{\sbseries\color{oldred}\lyrefnumber{#1}}\hspace*{2em}%
-  \makebox[0pt][l]{\sbseries\lyreftitle{#1}}\hspace*{6.5em}%
-  \hfill\sbseries\lyrefpage{#1}%
-  \endgroup%
-}
-\def\lyrefsection#1{%
-  \begingroup%
-  \makebox[0pt][l]{\color{oldred}\lyrefgenrenumber{#1}}\hspace*{2em}%
-  \makebox[0pt][l]{\ltseries\lyrefgenregenre{#1}}\hspace*{6.5em}%
-  \lyrefgenretitle{#1}\Dotfill\lyrefgenrepage{#1}%
-  \endgroup%
-}
-\InputIfFileExists{../out/lilypond.ref}{}{\InputIfFileExists{../lilypond.ref}{}{}}
-
-
-\newcommand\fancytitlehead{
-  \headingfont%
-  \fontsize{80}{80}\selectfont\textcolor{black!80}{\@ifundefined{@shortname}{\@lastname}{\@shortname}.}\\[15pt]%
-  \fontsize{50}{50}\selectfont\@ifundefined{@shorttitle}{\@title}{\@shorttitle}.%
-}
-
-
-\def\firstname#1{\def\@firstname{#1}}
-\def\lastname#1{\def\@lastname{#1}}
-\def\shortname#1{\def\@shortname{#1}}
-\def\shorttitle#1{\def\@shorttitle{#1}}
-\def\namesuffix#1{\def\@namesuffix{#1}}
-\def\instrumentation#1{\def\@instrumentation{#1}}
-\def\parts#1{\def\@parts{#1}}
-
-\firstname{\relax}
-\lastname{\relax}
-\namesuffix{\relax}
-\instrumentation{\relax}
-\parts{\relax}
-
-
-\def\maketitle{%
-\begin{titlepage}%
-  \Large%
-  {\@titlehead}%
-  \vfill%
-  {\strut\@firstname}\\%
-  {\sbseries\color{oldred}\strut\@lastname}\\%
-  {\strut\@namesuffix}%
-  \vfill%
-  {\sbseries\@title}\\%
-  {\@subtitle}\\[\baselineskip]%
-  {\itshape\@instrumentation}%
-  \vfill%
-  {\itshape\@parts}\hspace*{\fill}\raisebox{0pt}[0pt][0pt]{\includegraphics{ees_logo}}%
-\end{titlepage}%
-}
-
-
-\newif\iftemplate\templatetrue
-\newif\ifprintreport\printreportfalse
-\directlua{
-scores = {
-  vl1 = "Violino I",
-  vl2 = "Violino II",
-  vla1 = "Viola I",
-  vla2 = "Viola II",
-  coro = "Coro",
-  org = "Organo",
-  b = "Bassi",
-  full_score = "Full Score"
-}
-
-last_arg = arg[\string#arg]
-texio.write("Last argument: " .. last_arg)
-if not (scores[last_arg] == nil) then
-  tex.print("\string\\def\string\\lypdfname{" .. last_arg .. "}")
-  tex.print("\string\\parts{" .. scores[last_arg] .. "}")
-  if (last_arg == "full_score") then
-    tex.print("\string\\printreporttrue")
-  end
-end
-}
-
-\ifprintreport
-\geometry{landscape,outer=127mm}
-\fi
-
-\@ifundefined{lypdfname}{%
-  \templatefalse
-  \printreporttrue
-  \parts{Draft}
-}{\templatetrue}
-
-\makeatother
-
-
-
+\documentclass[shorttitlesize=55,tocstyle=none]{ees}
 
 \begin{document}
-\frenchspacing
 
-\titlehead{\fancytitlehead}
-\firstname{Edmund}
-\lastname{Sengmillner}
-\title{Quis Deus magnus}
-\subtitle{Offertorium pro festo S. Trinitatis\\(D-OB MO 792)}
-\instrumentation{S, A, T, B (solo), S, A, T, B (coro), 2 vl, 2 vla, b, org}
-\maketitle
+\eesTitlePage
 
+\eesCriticalReport{
+  7    & vl 2  & 3rd \quarterNote\ in \B1: d″8–d″8 \\
+  17   & org   & 2nd \halfNote\ in \B1: e4–d8–c8 \\
+  36   & A     & 1st/2nd \halfNote\ in \B1: \sharp f′4–\sharp f′4–\sharp f′2 \\
+  133  & org   & 2nd \halfNote\ in \B1: \sharp a4.–h8 \\
+  135  & T     & 5th \eighthNote\ in \B1: \sharp c′8 \\
+  137  & org   & lower voice, 4th to 6th \eighthNote\ in \B1: a′8–\sharp g′8–a′8 \\
+  140  & B     & last \eighthNote\ in \B1: B8 \\
+  153  & vl 2  & bar in \B1: \sharp f″ \\
+  151  & A     & last \quarterNote\ in \B1: g′8–\sharp f′8 \\
+}
 
-\thispagestyle{empty}
-
-\vspace*{\fill}
-
-\raisebox{-4mm}{\includegraphics{byncsaeu}}\hspace*{1em}Wolfgang Esser-Skala, 2021
-
-© 2021 by Wolfgang Esser-Skala. This edition is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
-
-Music engraving by LilyPond 2.22.0 (\url{http://www.lilypond.org}).\\
-Front matter typeset with Source Sans Pro and Fredericka the Great.
-
-\textit{First version, April 2021}
-
-\vspace*{2cm}
-
-\ifprintreport
-\chapter*{Critical Report.}
-
-This edition bases upon a copy in the Benediktinerabtei Ottobeuren (siglum MO 792; see also RISM ID 450008328).
-
-In general, this edition closely follows the manuscript. Any changes that were introduced by the editor are indicated by italic type (lyrics, dynamics and directions), parentheses (expressive marks and bass figures) or dashes (slurs and ties). Accidentals are used according to modern conventions. Asterisks denote changes that are clarified in the detailed remarks below.\footnote{Abbreviations: A, alto; B, bass; b, basses; Ms, manuscript; org, organ; r, rest; S, soprano; T,~tenor; vl, violin; vla, viola.}
-
-\bigskip
-
-\begin{longtable}{lll L{10cm}}
-  \toprule
-  \itshape Bar & \itshape Staff & \itshape Note \\
-  \midrule \endhead
-  7    & vl 2  & 5th/6th eighth in Ms: d″8–d″8 \\
-  17   & org   & 2nd half of bar in Ms: e4–d8–c8 \\
-  36   & A     & 1st/2nd half note in Ms: fis′4–fis′4–fis′2 \\
-  133  & org   & 2nd half of bar in Ms: ais4.–h8 \\
-  135  & T     & 5th eighth in Ms: cis′8 \\
-  137  & org   & lower voice, 4th to 6th eighth in Ms: a′8–gis′8–a′8 \\
-  140  & B     & last eighth in Ms: B8 \\
-  153  & vl 2  & bar in Ms: fis″ \\
-  151  & A     & last quarter in Ms: g′8–fis′8 \\
-  \bottomrule
-\end{longtable}
-
-
-This edition has been compiled and checked with utmost diligence. Nevertheless, errors and mistakes cannot be totally excluded. Please report any errors and mistakes to \url{wolfgang@esser-skala.at} or create an issue or pull request on the edition’s GitHub page \url{https://github.com/skafdasschaf/sengmillner-quis-deus-magnus}. Your help will be greatly appreciated.
-
-\bigskip
-\textit{Koppl, April 2021\\
-Wolfgang Esser-Skala}
-
+\ifPrintFrontMatter
 \cleardoublepage
-\chapter*{Lyrics.}
-
+\chapter{Lyrics}
 Quis Deus magnus sicut Deus noster,\\
 qui facit mirabilia terribilis super omnes Deos\\
 quis aequali fulget gloria tam tremenda maiestatis. \\
@@ -301,11 +40,13 @@ regnat trina unitas.\\
 O ut nullum te ignoret,\\
 totus orbis te adoret,\\
 o beata Trinitas.
-
 \fi
 
-\iftemplate
-\includepdf[pages=-]{../out/\lypdfname.pdf}
-\fi
+\eesToc{}
+
+\eesScore
 
 \end{document}
+
+
+\cleardoublepage

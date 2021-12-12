@@ -1,20 +1,13 @@
 \version "2.22.0"
 
 \include "../definitions.ly"
-
-\paper {
-  #(set-paper-size "a4landscape")
-  top-margin = 1\cm
-  indent = 3\cm
-}
-
-#(set-global-staff-size 15.87)
+\include "score_settings/full-score.ly"
 
 \book {
   \bookpart {
-    \header {
-      title = "Q U I S   D E U S   M A G N U S"
-    }
+    \section "Quis Deus magnus"
+    \addTocEntry
+    \paper { indent = 3\cm }
     \score {
       <<
         \new StaffGroup <<
@@ -36,34 +29,26 @@
               \ViolaI
             }
             \new Staff {
-              \set Staff.instrumentName = \ViolaIIIncipit
-              \override Staff.InstrumentName.self-alignment-Y = ##f
-              \override Staff.InstrumentName.self-alignment-X = #RIGHT
+              \incipit "II" "tenor" #-16.6 #-0.7
               \ViolaII
             }
           >>
         >>
         \new ChoirStaff <<
           \new Staff {
-            \set Staff.instrumentName = \SopranoIncipit
-            \override Staff.InstrumentName.self-alignment-Y = ##f
-            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \incipitSoprano
             \new Voice = "Soprano" { \dynamicUp \SopranoNotes }
           }
           \new Lyrics \lyricsto Soprano \SopranoLyrics
 
           \new Staff {
-            \set Staff.instrumentName = \AltoIncipit
-            \override Staff.InstrumentName.self-alignment-Y = ##f
-            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \incipitAlto
             \new Voice = "Alto" { \dynamicUp \AltoNotes }
           }
           \new Lyrics \lyricsto Alto \AltoLyrics
 
           \new Staff {
-            \set Staff.instrumentName = \TenoreIncipit
-            \override Staff.InstrumentName.self-alignment-Y = ##f
-            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \incipitTenore
             \new Voice = "Tenore" { \dynamicUp \TenoreNotes }
           }
           \new Lyrics \lyricsto Tenore \TenoreLyrics

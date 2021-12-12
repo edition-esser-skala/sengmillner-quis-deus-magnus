@@ -1,16 +1,5 @@
 \version "2.22.0"
 
-ViolaIIIncipit = \markup {
-  "II" \hspace #-16.6 \score {
-    \new Staff \with {
-      \remove Time_signature_engraver
-    } {
-      \clef tenor s4 \bar empty
-    }
-    \layout { }
-  } \hspace #-0.7
-}
-
 ViolaII = {
   \relative c' {
     \clef alto

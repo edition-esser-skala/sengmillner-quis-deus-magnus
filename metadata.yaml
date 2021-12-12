@@ -1,17 +1,16 @@
-composer: Sengmillner, Edmund
+composer:
+  last: Sengmillner
+  first: Edmund
 title: Quis Deus magnus
-id: (D-OB MO 792)
+subtitle: Offertorium pro festo S. Trinitatis
 genre: offertorium
 scoring: S, A, T, B (solo), S, A, T, B (coro), 2 vl, 2 vla, b, org
+license: cc-by-sa-4.0
 sources:
-  1:
+  B1:
     siglum: D-OB
     shelfmark: MO 792
-    type: manuscript copy
     date: 1700–1735
     rism: 450008328
-    url: http://dommusikarchiv.martinus.at/site/werkverzeichnis/gallery/301.html
-github: sengmillner-quis-deus-magnus
-imslp: 
-notes:
-
+    license: public domain
+    principal: true
